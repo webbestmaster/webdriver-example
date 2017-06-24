@@ -13,3 +13,34 @@ until.elementLocated(WebDriver.By.css(selector))
 // elem can be clickable
 until.elementIsVisible(elem),  elem.isDisplayed().then
 
+// adb prepare
+// Install apk to device from pc
+$./adb -s <serialId> -e install -r  android-server.apk
+
+// Start the Android WebDriver application through the UI of the device or by running this command:
+$./adb -s <serialId> shell am start -a android.intent.action.MAIN -n org.openqa.selenium.android.app/.MainActivity
+
+// You can start the application in debug mode, which has more verbose logs by doing:
+$./adb -s <serialId> shell am start -a android.intent.action.MAIN -n org.openqa.selenium.android.app/.MainActivity -e debug true
+
+// adb work
+cd ~/Android/Sdk/platform-tools/
+
+./adb devices - to get device list
+
+./adb [-s 7cd23986] forward tcp:8080 tcp:8080
+
+./adb -s A3P4376F48D9 forward tcp:<server port http://localhost:' + SERVER_PORT + '/wd/hub> tcp:<device port 8080>
+
+//from man
+ forward --list           list all forward socket connections
+ forward [--no-rebind] LOCAL REMOTE
+     forward socket connection using:
+       tcp:<port> (<local> may be "tcp:0" to pick any open port)
+       localabstract:<unix domain socket name>
+       localreserved:<unix domain socket name>
+       localfilesystem:<unix domain socket name>
+       dev:<character device name>
+       jdwp:<process pid> (remote only)
+ forward --remove LOCAL   remove specific forward socket connection
+ forward --remove-all     remove all forward socket connections
