@@ -1,0 +1,15 @@
+driver.wait(fn:function, time)
+
+fn - callback should return true/false only
+
+WebDriver.Key - contain keys as ENTER, TAB etc...
+
+// do ctrl + a
+driver.findElement(WebDriver.By.css('#lst-ib')).sendKeys(WebDriver.Key.CONTROL + 'a');
+
+// elem exist on page
+until.elementLocated(WebDriver.By.css(selector))
+
+// elem can be clickable
+until.elementIsVisible(elem),  elem.isDisplayed().then
+
