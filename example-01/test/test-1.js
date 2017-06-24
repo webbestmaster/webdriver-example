@@ -5,7 +5,7 @@ const SERVER_PORT = 4444;
 
 const server = new SeleniumServer('./../driver/selenium-server-standalone-3.0.1.jar', {
     port: SERVER_PORT,
-    jvmArgs: ['-Dwebdriver.chrome.driver=./driver/linux/chromedriver']
+    jvmArgs: ['-Dwebdriver.chrome.driver=./../driver/chromedriver']
 });
 
 describe('test describe', function () {
@@ -15,7 +15,7 @@ describe('test describe', function () {
     // each test should be less than 10s
     this.timeout(10e3);
 
-    // before(() => server.start());
+    before(() => server.start());
 
     after(() => server.stop());
 
@@ -52,7 +52,7 @@ describe('test describe', function () {
         return driver.get('https://yandex.com/');
     });
 
-    it.only('test it', () => {
+    it('test it', () => {
         driver.get('http://localhost:63342/webdriver-example/index.html?_ijt=3hdojk2444r32a0qrat2e2avdr');
 
         driver.sleep(1e3);

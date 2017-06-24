@@ -15,7 +15,7 @@ describe('test describe', function () {
     // each test should be less than 10s
     this.timeout(10e3);
 
-    // before(() => server.start());
+   before(() => server.start());
 
     after(() => server.stop());
 

@@ -44,3 +44,6 @@ cd ~/Android/Sdk/platform-tools/
        jdwp:<process pid> (remote only)
  forward --remove LOCAL   remove specific forward socket connection
  forward --remove-all     remove all forward socket connections
+
+// kill process on 4444/tcp
+fuser -k 4444/tcp
