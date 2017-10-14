@@ -53,10 +53,12 @@ describe('test describe', function () {
     });
 
     it('test it', () => {
-        driver.get('http://localhost:63342/webdriver-example/index.html?_ijt=3hdojk2444r32a0qrat2e2avdr');
+        driver.get('http://localhost:3000/front/test/'); // ./index.html
 
         driver.sleep(1e3);
-        driver.findElement(WebDriver.By.css('#tag')).click();
+        driver.findElement(WebDriver.By.css('#tag')).click().catch(evt => {
+            console.log('can not click, too far');
+        });
 
         ['#no-exist', '#tag', '#none', '#zero', '#far'].forEach(selector => {
             driver.wait(until.elementLocated(WebDriver.By.css(selector)), 1e3)
