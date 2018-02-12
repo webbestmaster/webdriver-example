@@ -29,6 +29,7 @@ describe('test describe', function () {
 
     afterEach(() => driver.quit());
 
+/*
     it('test it', () => {
         driver.get('https://google.com/');
 
@@ -51,27 +52,31 @@ describe('test describe', function () {
 
         return driver.get('https://yandex.com/');
     });
+*/
 
     it('test it', () => {
-        driver.get('http://localhost:3000/front/test/'); // ./index.html
+        driver.get('http://localhost:9080/'); // ./index.html
 
         driver.sleep(1e3);
         driver.findElement(WebDriver.By.css('#tag')).click().catch(evt => {
             console.log('can not click, too far');
         });
 
+        let chain = Promise.resolve();
+
         ['#no-exist', '#tag', '#none', '#zero', '#far'].forEach(selector => {
-            driver.wait(until.elementLocated(WebDriver.By.css(selector)), 1e3)
-                .then(elem => {
-                    console.log('//----', selector, '----\\');
-                    console.log(selector, '- is good for until.elementLocated');
-                    return elem;
-                })
-                .catch(err => {
-                    console.error(selector, '- is not for until.elementLocated');
-                })
-                .then(elem => {
-                    return elem && Promise.all([
+            chain = chain.then(() => {
+                return driver.wait(until.elementLocated(WebDriver.By.css(selector)), 1e3)
+                    .then(elem => {
+                        console.log('//----', selector, '----\\\\');
+                        console.log(selector, '- is good for until.elementLocated');
+                        return elem;
+                    })
+                    .catch(err => {
+                        console.error(selector, '- is not for until.elementLocated');
+                    })
+                    .then(elem => {
+                        return elem && Promise.all([
                             driver.wait(until.elementIsVisible(elem), 1e3)
                                 .then(elem => {
                                     console.log(selector, '- is good for until.elementIsVisible');
@@ -88,19 +93,24 @@ describe('test describe', function () {
                                 }
                             })
                         ]);
-                });
+                    });
+            })
         });
 
-        driver
-            .findElement(WebDriver.By.css('#tag'))
-            .then(elem => elem.getAttribute('innerHTML'))
-            .then(html => console.log(html));
+        return chain.then(() => {
+            console.log('--- other methods ---');
 
-        driver
-            .executeScript(() => document.querySelector('#tag').outerHTML)
-            .then(html => console.log(html));
+            driver
+                .findElement(WebDriver.By.css('#tag'))
+                .then(elem => elem.getAttribute('innerHTML'))
+                .then(html => console.log(html));
 
-        return driver.sleep(2e3);
+            driver
+                .executeScript(() => document.querySelector('#tag').outerHTML)
+                .then(html => console.log(html));
+
+            return driver.sleep(2e3);
+        });
     });
 
 });
